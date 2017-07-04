@@ -23,26 +23,27 @@ app.get('/v1/images', function (req, res) {
         jsonFlickrString = jsonFlickrString.substring("jsonFlickrFeed(".length, jsonFlickrString.length-1);
         var json = JSON.parse(jsonFlickrString)
       // 2. parse the imageId
-        json.items.forEach((image) => {
+        var parsedData = json.items.map((image) => {
           var imageObj = {}
           imageObj.flickr_id = parseInt(/\d{11}/.exec(image.link)[0])
           imageObj.flickr_url = image.media.m
           imageObj.date_taken = image.date_taken
           imageObj.date_published = image.published
           imageObj.author = image.author.substring('nobody@flickr.com ("'.length, image.author.length - 2 )
-
-          db.addImage(imageObj, (err) => {
-            if (err) {
-              // res.status(501).send(false);
-              console.log(err)
-            } else {
-              // res.status(200).send(true);
-              console.log("finished inserting image")
-            }
-          });
+          return imageObj
         })
 
-        return json.items
+        db.addImages(parsedData, (err) => {
+          if (err) {
+            // res.status(501).send(false);
+            console.log(err)
+          } else {
+            // res.status(200).send(true);
+            console.log("finished inserting all images")
+          }
+        });
+
+        return parsedData
       })
       .catch((err) => {
         console.log(err)
