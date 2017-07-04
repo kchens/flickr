@@ -13,28 +13,28 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    // let header = new Headers({
-    //   'Access-Control-Allow-Origin':'*',
-    //   'Content-Type': 'multipart/form-data'
-    // });
-    // let sentData={
-    //   mode: 'cors',
-    //   header: header,
-    //   body: ''
-    // };
-    console.log('getting flickr')
+  componentWillMount() {
     axios('/v1/images?src=flickr')
-    .then((response) => {
-      console.log(response)
-      // this.setState({
-      //   albums: response.data
-      // })
-      console.log('Added album successfully')
-    })
-    .catch((error) => {
-      console.log("Didn't add album");
+      .then((response) => {
+        // console.log(response)
+        // this.setState({
+        //   albums: response.data
+        // })
+        console.log('Added album successfully')
+      })
+      .catch((error) => {
+        console.log("Didn't add album");
     });
+  }
+
+  componentDidMount() {
+    axios('/v1/images?src=private&limit=10&lastImageId=10')
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   render() {
@@ -44,7 +44,6 @@ class App extends React.Component {
     // console.log(albums[0].description)
     return (
       <div>
-        <AlbumList albums = {this.state.albums} />
         Yolo
       </div>
     )

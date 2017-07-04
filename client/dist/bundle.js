@@ -10483,26 +10483,25 @@ var App = function (_React$Component) {
   }
 
   _createClass(App, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      // let header = new Headers({
-      //   'Access-Control-Allow-Origin':'*',
-      //   'Content-Type': 'multipart/form-data'
-      // });
-      // let sentData={
-      //   mode: 'cors',
-      //   header: header,
-      //   body: ''
-      // };
-      console.log('getting flickr');
+    key: 'componentWillMount',
+    value: function componentWillMount() {
       (0, _axios2.default)('/v1/images?src=flickr').then(function (response) {
-        console.log(response);
+        // console.log(response)
         // this.setState({
         //   albums: response.data
         // })
         console.log('Added album successfully');
       }).catch(function (error) {
         console.log("Didn't add album");
+      });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      (0, _axios2.default)('/v1/images?src=private&limit=10&lastImageId=10').then(function (res) {
+        console.log(res);
+      }).catch(function (err) {
+        console.log(err);
       });
     }
   }, {
@@ -10515,7 +10514,6 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_AlbumList2.default, { albums: this.state.albums }),
         'Yolo'
       );
     }

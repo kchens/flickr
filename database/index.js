@@ -4,7 +4,9 @@ var mysqlConfig = require('./config.js');
 var connection = mysql.createConnection(mysqlConfig);
 
 var getNextImages = function(lastImageId, limit, cb) {
-  var query = `SELECT * FROM images WHERE id < '${lastImageId }' LIMIT '${limit}'`
+  // var query = `SELECT * FROM images WHERE id < '${lastImageId }' LIMIT '${limit}'`
+  var query = `SELECT * FROM images LIMIT ${limit}`
+  console.log(query)
   connection.query(query, (err,results,fields) => {
     console.log(results)
     if (err) {

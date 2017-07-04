@@ -30,7 +30,7 @@ app.get('/v1/images', function (req, res) {
           imageObj.date_taken = image.date_taken
           imageObj.date_published = image.published
           imageObj.author = image.author.substring('nobody@flickr.com ("'.length, image.author.length - 2 )
-          console.log(imageObj)
+
           db.addImage(imageObj, (err) => {
             if (err) {
               // res.status(501).send(false);
@@ -42,17 +42,11 @@ app.get('/v1/images', function (req, res) {
           });
         })
 
-        return json
+        return json.items
       })
       .catch((err) => {
         console.log(err)
       })
-  //    flickr_id INT,
-  //    flickr_url VARCHAR(500),
-  //    date_taken VARCHAR(30),
-  //    date_published VARCHAR(30),
-  //    author VARCHAR(30),
-
 
     // 3. do imageIds exists in database?
     // //
@@ -60,6 +54,7 @@ app.get('/v1/images', function (req, res) {
   }
 
   if ( req.query.src === SRC_PRIVATE ) {
+    console.log('in private')
     db.getNextImages(req.query.lastImageId, req.query.limit, (err, data) => {
       if (err) {
         res.status(501).send(err);
