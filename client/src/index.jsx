@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import axios from 'axios'
 import AlbumList from './components/AlbumList.jsx';
 import NewAlbumForm from './components/NewAlbumForm.jsx';
+import "./index.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class App extends React.Component {
     const string = JSON.stringify(this.state.images)
     return (
       <div>
-        Yolo
+        <div className="orange">Yolo</div>
         { string }
       </div>
     )

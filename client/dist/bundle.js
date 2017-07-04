@@ -10460,6 +10460,8 @@ var _NewAlbumForm = __webpack_require__(211);
 
 var _NewAlbumForm2 = _interopRequireDefault(_NewAlbumForm);
 
+__webpack_require__(212);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10522,7 +10524,11 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'Yolo',
+        _react2.default.createElement(
+          'div',
+          { className: 'orange' },
+          'Yolo'
+        ),
         string
       );
     }
@@ -24187,6 +24193,12 @@ var NewAlbumForm = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = NewAlbumForm;
+
+/***/ }),
+/* 212 */
+/***/ (function(module, exports) {
+
+
 
 /***/ })
 /******/ ]);
