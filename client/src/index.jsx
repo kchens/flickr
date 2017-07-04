@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
-import AlbumList from './components/AlbumList.jsx';
-import NewAlbumForm from './components/NewAlbumForm.jsx';
+import ImageCardList from './components/ImageCardList.jsx';
 import "./index.css";
 
 class App extends React.Component {
@@ -43,13 +42,12 @@ class App extends React.Component {
 
   render() {
     const { images } = this.state
-    // console.log(albums)
-    // const albums = this.state.albums ? this.state.albums[0] : null
-    const string = JSON.stringify(this.state.images)
+    console.log(images)
+    console.log('--------')
     return (
-      <div>
-        <div className="orange">Yolo</div>
-        { string }
+      <div className="mw6">
+        <div className="orange">Flickr App</div>
+        <ImageCardList images={images}></ImageCardList>
       </div>
     )
   }

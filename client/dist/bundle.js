@@ -10452,13 +10452,9 @@ var _axios = __webpack_require__(191);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _AlbumList = __webpack_require__(210);
+var _ImageCardList = __webpack_require__(214);
 
-var _AlbumList2 = _interopRequireDefault(_AlbumList);
-
-var _NewAlbumForm = __webpack_require__(211);
-
-var _NewAlbumForm2 = _interopRequireDefault(_NewAlbumForm);
+var _ImageCardList2 = _interopRequireDefault(_ImageCardList);
 
 __webpack_require__(212);
 
@@ -10517,19 +10513,18 @@ var App = function (_React$Component) {
     key: 'render',
     value: function render() {
       var images = this.state.images;
-      // console.log(albums)
-      // const albums = this.state.albums ? this.state.albums[0] : null
 
-      var string = JSON.stringify(this.state.images);
+      console.log(images);
+      console.log('--------');
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'mw6' },
         _react2.default.createElement(
           'div',
           { className: 'orange' },
-          'Yolo'
+          'Flickr App'
         ),
-        string
+        _react2.default.createElement(_ImageCardList2.default, { images: images })
       );
     }
   }]);
@@ -24040,7 +24035,18 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 210 */
+/* 210 */,
+/* 211 */,
+/* 212 */
+/***/ (function(module, exports) {
+
+/*.App {
+  width: 300px
+}*/
+
+/***/ }),
+/* 213 */,
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24064,141 +24070,55 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var AlbumList = function (_React$Component) {
-  _inherits(AlbumList, _React$Component);
+var ImageCardList = function (_React$Component) {
+  _inherits(ImageCardList, _React$Component);
 
-  function AlbumList(props) {
-    _classCallCheck(this, AlbumList);
+  function ImageCardList(props) {
+    _classCallCheck(this, ImageCardList);
 
-    return _possibleConstructorReturn(this, (AlbumList.__proto__ || Object.getPrototypeOf(AlbumList)).call(this, props));
+    return _possibleConstructorReturn(this, (ImageCardList.__proto__ || Object.getPrototypeOf(ImageCardList)).call(this, props));
   }
 
-  _createClass(AlbumList, [{
+  _createClass(ImageCardList, [{
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
-        this.props.albums.map(function (album) {
+        this.props.images && this.props.images.map(function (image, index) {
           return _react2.default.createElement(
-            'ul',
-            { key: album.id },
+            'div',
+            { key: index },
             _react2.default.createElement(
-              'h4',
+              'div',
               null,
-              album.era,
-              ' (',
-              album.year,
-              ')'
+              'By ',
+              image.author
             ),
             _react2.default.createElement(
-              'p',
+              'div',
               null,
-              album.description
+              'Taken on ',
+              image.date_taken
             ),
-            _react2.default.createElement('img', { src: album.imageUrl })
+            _react2.default.createElement(
+              'div',
+              null,
+              'Published on ',
+              image.date_published,
+              ' '
+            ),
+            _react2.default.createElement('img', { src: image.flickr_url })
           );
         })
       );
     }
   }]);
 
-  return AlbumList;
+  return ImageCardList;
 }(_react2.default.Component);
 
-exports.default = AlbumList;
-
-/***/ }),
-/* 211 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(33);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var NewAlbumForm = function (_React$Component) {
-  _inherits(NewAlbumForm, _React$Component);
-
-  function NewAlbumForm(props) {
-    _classCallCheck(this, NewAlbumForm);
-
-    var _this = _possibleConstructorReturn(this, (NewAlbumForm.__proto__ || Object.getPrototypeOf(NewAlbumForm)).call(this, props));
-
-    _this.state = {
-      era: '',
-      year: '',
-      description: '',
-      imageURL: ''
-    };
-    return _this;
-  }
-
-  _createClass(NewAlbumForm, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        'Era: ',
-        _react2.default.createElement('input', { onChange: function onChange(e) {
-            return _this2.setState({ era: e.target.value });
-          } }),
-        _react2.default.createElement('br', null),
-        'Year: ',
-        _react2.default.createElement('input', { onChange: function onChange(e) {
-            return _this2.setState({ year: e.target.value });
-          } }),
-        _react2.default.createElement('br', null),
-        'Description: ',
-        _react2.default.createElement('input', { onChange: function onChange(e) {
-            return _this2.setState({ description: e.target.value });
-          } }),
-        _react2.default.createElement('br', null),
-        'ImageURL: ',
-        _react2.default.createElement('input', { onChange: function onChange(e) {
-            return _this2.setState({ imageURL: e.target.value });
-          } }),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          'button',
-          { onClick: function onClick() {
-              return _this2.props.submitAlbum(_this2.state);
-            } },
-          'Submit'
-        )
-      );
-    }
-  }]);
-
-  return NewAlbumForm;
-}(_react2.default.Component);
-
-exports.default = NewAlbumForm;
-
-/***/ }),
-/* 212 */
-/***/ (function(module, exports) {
-
-
+exports.default = ImageCardList;
 
 /***/ })
 /******/ ]);
