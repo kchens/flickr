@@ -40,8 +40,8 @@ var getExistingFlickrIds = function(flickrIds) {
 var addImages = function(imageObjs, cb) {
   // FOR TESTING DUPLICATES
   // imageObjs.push({ flickr_id: 34869566464 }, {flickr_id: 34869566784 })
-  // console.log('imageObjs')
-  // console.log(imageObjs)
+  console.log('imageObjs')
+  console.log(imageObjs)
 
   var newImageIds = imageObjs.map((image) => { return image.flickr_id}).join(',')
   var existingImageIds = getExistingFlickrIds(newImageIds)

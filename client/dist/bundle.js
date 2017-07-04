@@ -10477,7 +10477,7 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      albums: []
+      images: []
     };
     return _this;
   }
@@ -10485,21 +10485,28 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      (0, _axios2.default)('/v1/images?src=flickr').then(function (response) {
-        // console.log(response)
-        // this.setState({
-        //   albums: response.data
-        // })
-        console.log('Added album successfully');
-      }).catch(function (error) {
-        console.log("Didn't add album");
-      });
+      // axios('/v1/images?src=flickr')
+      //   .then((response) => {
+      //     // console.log(response)
+      //     // this.setState({
+      //     //   albums: response.data
+      //     // })
+      //     console.log('Added album successfully')
+      //   })
+      //   .catch((error) => {
+      //     console.log("Didn't add album");
+      // });
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       (0, _axios2.default)('/v1/images?src=private&limit=10&lastImageId=10').then(function (res) {
-        console.log(res);
+        if (res.data.length < 10) {
+          (0, _axios2.default)('/v1/images?src=flickr');
+        }
+        _this2.setState({ images: res.data });
       }).catch(function (err) {
         console.log(err);
       });
@@ -10507,14 +10514,16 @@ var App = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      // const { albums } = this.state
+      var images = this.state.images;
       // console.log(albums)
       // const albums = this.state.albums ? this.state.albums[0] : null
-      // console.log(albums[0].description)
+
+      var string = JSON.stringify(this.state.images);
       return _react2.default.createElement(
         'div',
         null,
-        'Yolo'
+        'Yolo',
+        string
       );
     }
   }]);

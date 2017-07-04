@@ -9,28 +9,31 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      albums: []
+      images: []
     }
   }
 
   componentWillMount() {
-    axios('/v1/images?src=flickr')
-      .then((response) => {
-        // console.log(response)
-        // this.setState({
-        //   albums: response.data
-        // })
-        console.log('Added album successfully')
-      })
-      .catch((error) => {
-        console.log("Didn't add album");
-    });
+    // axios('/v1/images?src=flickr')
+    //   .then((response) => {
+    //     // console.log(response)
+    //     // this.setState({
+    //     //   albums: response.data
+    //     // })
+    //     console.log('Added album successfully')
+    //   })
+    //   .catch((error) => {
+    //     console.log("Didn't add album");
+    // });
   }
 
   componentDidMount() {
     axios('/v1/images?src=private&limit=10&lastImageId=10')
       .then((res) => {
-        console.log(res)
+        if (res.data.length < 10) {
+           axios('/v1/images?src=flickr')
+        }
+        this.setState({ images: res.data })
       })
       .catch((err) => {
         console.log(err)
@@ -38,13 +41,14 @@ class App extends React.Component {
   }
 
   render() {
-    // const { albums } = this.state
+    const { images } = this.state
     // console.log(albums)
     // const albums = this.state.albums ? this.state.albums[0] : null
-    // console.log(albums[0].description)
+    const string = JSON.stringify(this.state.images)
     return (
       <div>
         Yolo
+        { string }
       </div>
     )
   }

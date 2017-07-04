@@ -28,7 +28,7 @@ app.get('/v1/images', function (req, res) {
           imageObj.flickr_id = parseInt(/\d{11}/.exec(image.link)[0])
           imageObj.flickr_url = image.media.m
           imageObj.date_taken = image.date_taken
-          imageObj.date_published = image.published
+          imageObj.date_published = Date.parse(image.published)
           imageObj.author = image.author.substring('nobody@flickr.com ("'.length, image.author.length - 2 )
           return imageObj
         })
