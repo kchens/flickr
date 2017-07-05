@@ -1,4 +1,5 @@
 import React from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 
 class ImageCardListLayout extends React.Component {
   constructor(props) {
@@ -10,9 +11,10 @@ class ImageCardListLayout extends React.Component {
   }
 
   render() {
+    const { images, onClickLoadMoreImages } = this.props
     return (
       <div>
-        {this.props.images.map((image, index) => {
+        { images.map((image, index) => {
             return (<div key={index}>
               <div>By {image.author}</div>
               <div>Taken on {image.date_taken}</div>
@@ -21,6 +23,10 @@ class ImageCardListLayout extends React.Component {
             </div>)
           }
         )}
+        <a onClick={(e) => {
+          e.preventDefault()
+          onClickLoadMoreImages()
+          }}>Load Next 10</a>
       </div>
     )
   }

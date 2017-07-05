@@ -1,16 +1,17 @@
 import { connect } from 'react-redux'
-import { loadImages } from '../actions/imageCardList'
+import { loadImages, loadNextImages } from '../actions/imageCardList'
 import ImageCardListLayout from '../components/ImageCardListLayout.jsx'
 
 const mapStateToProps = (state) => {
   return {
-    images: state.images.images
+    images: state.images
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onComponentDidMount: () => { dispatch(loadImages())}
+    onComponentDidMount: () => { dispatch(loadImages()) },
+    onClickLoadMoreImages: () => { dispatch(loadNextImages()) }
   }
 }
 

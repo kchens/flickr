@@ -48,10 +48,6 @@ app.get('/v1/images', function (req, res) {
       .catch((err) => {
         console.log(err)
       })
-
-    // 3. do imageIds exists in database?
-    // //
-    // 4.
   }
 
   if ( req.query.src === SRC_PRIVATE ) {

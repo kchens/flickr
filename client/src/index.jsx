@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 import store from './store';
 import "./index.css";
 
+import { Router, Route, hashHistory } from 'react-router'
+
 class App extends React.Component {
   constructor(props) {
     super(props);
