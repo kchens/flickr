@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageCard from './ImageCard.jsx'
 
 class FavoritesListLayout extends React.Component {
   constructor(props) {
@@ -6,11 +7,19 @@ class FavoritesListLayout extends React.Component {
 
   }
 
+  componentDidMount() {
+    this.props.onComponentDidMount()
+  }
+
   render() {
-    // const { images, onClickLoadMoreImages } = this.props
+    const { favorites, onClickFavorite } = this.props
     return (
       <div>
-        Favorites
+        FavoritesList
+        { favorites.map((image, index) => {
+            return (<ImageCard key={index} image={image} onClickFavorite={onClickFavorite}></ImageCard>)
+          }
+        )}
       </div>
     )
   }

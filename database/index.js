@@ -90,19 +90,24 @@ var addFavorite = function(reqObj, cb) {
         cb(null, results);
       }
     });
-    // selectQuery = `SELECT * FROM images WHERE id = ${reqObj.imageId}`
-    // console.log(selectQuery)
-    // connection.query(query, (err,results,fields) => {
-    //   console.log(results)
-    //   if (err) {
-    //     resolve(cb(err, null));
-    //   } else {
-    //     resolve(cb(null, results));
-    //   }
-    // });
+}
+
+var getFavorites = function(cb) {
+  var query = `SELECT * FROM images WHERE is_favorite = 1`
+  console.log(query)
+  connection.query(query, (err,results,fields) => {
+    if (err) {
+      console.log(err)
+      cb(err, null);
+    } else {
+      console.log(results)
+      cb(null, results);
+    }
+  });
 }
 
 module.exports.getNextImages = getNextImages;
 module.exports.getExistingFlickrIds = getExistingFlickrIds;
 module.exports.addImages = addImages;
 module.exports.addFavorite = addFavorite;
+module.exports.getFavorites = getFavorites;

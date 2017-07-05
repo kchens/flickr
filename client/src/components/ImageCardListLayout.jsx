@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
+import ImageCard from './ImageCard.jsx'
 
 class ImageCardListLayout extends React.Component {
   constructor(props) {
@@ -21,16 +22,7 @@ class ImageCardListLayout extends React.Component {
       <div>
         <Link to={`/favorites`}>Favorites</Link>
         { images.map((image, index) => {
-            return (<div key={index}>
-              <div>By {image.author}</div>
-              <div>Taken on {image.date_taken}</div>
-              <div>Published on {image.date_published} </div>
-              <img src={image.flickr_url}></img>
-              <button onClick={(e) => {
-                e.preventDefault()
-                onClickFavorite(image)
-                }}>Like</button>
-            </div>)
+            return (<ImageCard key={index} image={image} onClickFavorite={onClickFavorite}></ImageCard>)
           }
         )}
         <a onClick={(e) => {

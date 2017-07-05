@@ -13587,6 +13587,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = __webpack_require__(290);
 
+var _ImageCard = __webpack_require__(322);
+
+var _ImageCard2 = _interopRequireDefault(_ImageCard);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13633,38 +13637,7 @@ var ImageCardListLayout = function (_React$Component) {
           'Favorites'
         ),
         images.map(function (image, index) {
-          return _react2.default.createElement(
-            'div',
-            { key: index },
-            _react2.default.createElement(
-              'div',
-              null,
-              'By ',
-              image.author
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
-              'Taken on ',
-              image.date_taken
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
-              'Published on ',
-              image.date_published,
-              ' '
-            ),
-            _react2.default.createElement('img', { src: image.flickr_url }),
-            _react2.default.createElement(
-              'button',
-              { onClick: function onClick(e) {
-                  e.preventDefault();
-                  onClickFavorite(image);
-                } },
-              'Like'
-            )
-          );
+          return _react2.default.createElement(_ImageCard2.default, { key: index, image: image, onClickFavorite: onClickFavorite });
         }),
         _react2.default.createElement(
           'a',
@@ -15722,12 +15695,8 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             _reactRouter.Router,
             { history: history },
-            _react2.default.createElement(
-              _reactRouter.Route,
-              null,
-              _react2.default.createElement(_reactRouter.Route, { path: '/', component: _ImageCardList2.default }),
-              _react2.default.createElement(_reactRouter.Route, { path: '/favorites', component: _FavoritesList2.default })
-            )
+            _react2.default.createElement(_reactRouter.Route, { path: '/', component: _ImageCardList2.default }),
+            _react2.default.createElement(_reactRouter.Route, { path: '/favorites', component: _FavoritesList2.default })
           )
         )
         // </div>
@@ -29179,6 +29148,10 @@ var _images = __webpack_require__(288);
 
 var _images2 = _interopRequireDefault(_images);
 
+var _favorites = __webpack_require__(323);
+
+var _favorites2 = _interopRequireDefault(_favorites);
+
 var _redux = __webpack_require__(66);
 
 var _reactRouterRedux = __webpack_require__(315);
@@ -29187,6 +29160,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var rootReducer = (0, _redux.combineReducers)({
     images: _images2.default,
+    favorites: _favorites2.default,
     routing: _reactRouterRedux.routerReducer
 });
 
@@ -29213,7 +29187,6 @@ var images = function images() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
   var action = arguments[1];
 
-  debugger;
   switch (action.type) {
     case _imageCardList.ON_IMAGE_CARD_LIST_MOUNT:
       var newState = Object.assign({}, state, { images: action.images });
@@ -31849,6 +31822,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactRedux = __webpack_require__(116);
 
+var _favorites = __webpack_require__(321);
+
 var _FavoritesListLayout = __webpack_require__(320);
 
 var _FavoritesListLayout2 = _interopRequireDefault(_FavoritesListLayout);
@@ -31857,17 +31832,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    // images: state.images,
+    favorites: state.favorites
   };
 };
-// import { loadImages, loadNextImages, fetchNextFlickrImages } from '../actions/imageCardList'
-
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    // onComponentDidMount: () => { dispatch(loadImages()) },
-    // onClickLoadMoreImages: () => { dispatch(loadNextImages()) },
-    // fetchNextFlickrImages: () => { dispatch(fetchNextFlickrImages()) }
+    onComponentDidMount: function onComponentDidMount() {
+      dispatch((0, _favorites.loadFavorites)());
+    },
+    onClickFavorite: function onClickFavorite(imageId) {
+      dispatch((0, _favorites.onClickFavorite)(imageId));
+    }
   };
 };
 
@@ -31892,6 +31868,10 @@ var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _ImageCard = __webpack_require__(322);
+
+var _ImageCard2 = _interopRequireDefault(_ImageCard);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31910,13 +31890,24 @@ var FavoritesListLayout = function (_React$Component) {
   }
 
   _createClass(FavoritesListLayout, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.onComponentDidMount();
+    }
+  }, {
     key: 'render',
     value: function render() {
-      // const { images, onClickLoadMoreImages } = this.props
+      var _props = this.props,
+          favorites = _props.favorites,
+          onClickFavorite = _props.onClickFavorite;
+
       return _react2.default.createElement(
         'div',
         null,
-        'Favorites'
+        'FavoritesList',
+        favorites.map(function (image, index) {
+          return _react2.default.createElement(_ImageCard2.default, { key: index, image: image, onClickFavorite: onClickFavorite });
+        })
       );
     }
   }]);
@@ -31936,7 +31927,7 @@ exports.default = FavoritesListLayout;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.onClickFavorite = exports.ON_CLICK_FAVORITE = undefined;
+exports.loadFavorites = exports.onClickFavorite = exports.ON_FAVORITES_LIST_MOUNT = exports.ON_CLICK_FAVORITE_FROM_FAVORITES = exports.ON_CLICK_FAVORITE = undefined;
 
 var _axios = __webpack_require__(109);
 
@@ -31945,6 +31936,8 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ON_CLICK_FAVORITE = exports.ON_CLICK_FAVORITE = 'ON_CLICK_FAVORITE';
+var ON_CLICK_FAVORITE_FROM_FAVORITES = exports.ON_CLICK_FAVORITE_FROM_FAVORITES = 'ON_CLICK_FAVORITE';
+var ON_FAVORITES_LIST_MOUNT = exports.ON_FAVORITES_LIST_MOUNT = 'ON_FAVORITES_LIST_MOUNT';
 
 var onClickFavorite = exports.onClickFavorite = function onClickFavorite(data) {
   return function (dispatch) {
@@ -31962,14 +31955,144 @@ var onClickFavorite = exports.onClickFavorite = function onClickFavorite(data) {
     });
 
     var newImageData = Object.assign({}, data, { is_favorite: newIsFavorite });
-    debugger;
     dispatch({ type: ON_CLICK_FAVORITE, newImageData: newImageData });
+    dispatch({ type: ON_CLICK_FAVORITE_FROM_FAVORITES, newImageData: newImageData });
   };
 };
 
 var toggleFavorite = function toggleFavorite(isFavorite) {
   return isFavorite ? 0 : 1;
 };
+
+var loadFavorites = exports.loadFavorites = function loadFavorites() {
+  return function (dispatch) {
+    var url = '/v1/favorites';
+    (0, _axios2.default)(url).then(function (res) {
+      var favorites = res.data;
+      dispatch({ type: ON_FAVORITES_LIST_MOUNT, favorites: favorites });
+    }).catch(function (err) {
+      console.log(err);
+    });
+  };
+};
+
+/***/ }),
+/* 322 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(9);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ImageCard = function (_React$Component) {
+  _inherits(ImageCard, _React$Component);
+
+  function ImageCard(props) {
+    _classCallCheck(this, ImageCard);
+
+    return _possibleConstructorReturn(this, (ImageCard.__proto__ || Object.getPrototypeOf(ImageCard)).call(this, props));
+  }
+
+  _createClass(ImageCard, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          image = _props.image,
+          onClickFavorite = _props.onClickFavorite;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          null,
+          'By ',
+          image.author
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          'Taken on ',
+          image.date_taken
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          'Published on ',
+          image.date_published,
+          ' '
+        ),
+        _react2.default.createElement('img', { src: image.flickr_url }),
+        _react2.default.createElement(
+          'button',
+          { onClick: function onClick(e) {
+              e.preventDefault();
+              onClickFavorite(image);
+            } },
+          'Like'
+        )
+      );
+    }
+  }]);
+
+  return ImageCard;
+}(_react2.default.Component);
+
+exports.default = ImageCard;
+
+/***/ }),
+/* 323 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _favorites = __webpack_require__(321);
+
+var DEFAULT_STATE = [];
+
+var favorites = function favorites() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _favorites.ON_FAVORITES_LIST_MOUNT:
+      var newState = Object.assign({}, state, { favorites: action.favorites });
+      return newState.favorites;
+    case _favorites.ON_CLICK_FAVORITE_FROM_FAVORITES:
+      return state.map(function (favorite) {
+        if (action.newImageData.id === favorite.id) {
+          return action.newImageData;
+        }
+        return favorite;
+      });
+    default:
+      return state;
+  }
+};
+
+exports.default = favorites;
 
 /***/ })
 /******/ ]);

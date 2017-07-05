@@ -1,18 +1,17 @@
 import { connect } from 'react-redux'
-// import { loadImages, loadNextImages, fetchNextFlickrImages } from '../actions/imageCardList'
+import { loadFavorites, onClickFavorite } from '../actions/favorites'
 import FavoritesListLayout from '../components/FavoritesListLayout.jsx'
 
 const mapStateToProps = (state) => {
   return {
-    // images: state.images,
+    favorites: state.favorites
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // onComponentDidMount: () => { dispatch(loadImages()) },
-    // onClickLoadMoreImages: () => { dispatch(loadNextImages()) },
-    // fetchNextFlickrImages: () => { dispatch(fetchNextFlickrImages()) }
+    onComponentDidMount: () => { dispatch(loadFavorites()) },
+    onClickFavorite: (imageId) => { dispatch(onClickFavorite(imageId)) }
   }
 }
 

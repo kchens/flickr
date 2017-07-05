@@ -62,6 +62,17 @@ app.get('/v1/images', function (req, res) {
   }
 });
 
+app.get('/v1/favorites', function(req, res) {
+  console.log('in /v1/favorites')
+  db.getFavorites((err, data) => {
+    if (err) {
+      res.status(501).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+})
+
 app.post('/v1/favorites', function(req, res) {
   console.log('in /v1/favorites')
   console.log(req.body)

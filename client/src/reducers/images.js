@@ -4,7 +4,6 @@ import { ON_CLICK_FAVORITE } from '../actions/favorites'
 const DEFAULT_STATE = []
 
 const images = (state = DEFAULT_STATE, action) => {
-  debugger
   switch (action.type) {
     case ON_IMAGE_CARD_LIST_MOUNT:
       let newState = Object.assign({}, state, {images: action.images})

@@ -26,11 +26,10 @@ class App extends React.Component {
       //   <div className="orange">Flickr App</div>
         <Provider store={store}>
           <Router history={history}>
-            {/*{routes(...this.props)}*/}
-            <Route >
+            {/*<Route>*/}
               <Route path='/' component={ImageCardList} />
               <Route path='/favorites' component={FavoritesList} />
-            </Route>
+            {/*</Route>*/}
           </Router>
         </Provider>
       // </div>
