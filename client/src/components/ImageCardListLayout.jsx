@@ -1,5 +1,5 @@
-import React from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
+import React from 'react'
+import { Link } from 'react-router'
 
 class ImageCardListLayout extends React.Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class ImageCardListLayout extends React.Component {
     const { images, onClickLoadMoreImages } = this.props
     return (
       <div>
+        <Link to={`/favorites`}>Favorites</Link>
         { images.map((image, index) => {
             return (<div key={index}>
               <div>By {image.author}</div>

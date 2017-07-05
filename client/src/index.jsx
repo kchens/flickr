@@ -7,7 +7,13 @@ import { Provider } from 'react-redux';
 import store from './store';
 import "./index.css";
 
-import { Router, Route, hashHistory } from 'react-router'
+import routes from './routes/index.jsx'
+import { Router, Route, browserHistory, hashHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
+
+import FavoritesList from './containers/FavoritesList.jsx'
+
+const history = syncHistoryWithStore(hashHistory, store)
 
 class App extends React.Component {
   constructor(props) {
@@ -16,12 +22,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="mw6">
-        <div className="orange">Flickr App</div>
+      // <div className="mw6">
+      //   <div className="orange">Flickr App</div>
         <Provider store={store}>
-          <ImageCardList></ImageCardList>
+          <Router history={history}>
+            {/*{routes(...this.props)}*/}
+            <Route >
+              <Route path='/' component={ImageCardList} />
+              <Route path='/favorites' component={FavoritesList} />
+            </Route>
+          </Router>
         </Provider>
-      </div>
+      // </div>
     )
   }
 }
