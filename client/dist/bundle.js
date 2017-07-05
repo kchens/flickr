@@ -13621,7 +13621,8 @@ var ImageCardListLayout = function (_React$Component) {
     value: function render() {
       var _props2 = this.props,
           images = _props2.images,
-          onClickLoadMoreImages = _props2.onClickLoadMoreImages;
+          onClickLoadMoreImages = _props2.onClickLoadMoreImages,
+          onClickFavorite = _props2.onClickFavorite;
 
       return _react2.default.createElement(
         'div',
@@ -13654,7 +13655,15 @@ var ImageCardListLayout = function (_React$Component) {
               image.date_published,
               ' '
             ),
-            _react2.default.createElement('img', { src: image.flickr_url })
+            _react2.default.createElement('img', { src: image.flickr_url }),
+            _react2.default.createElement(
+              'button',
+              { onClick: function onClick(e) {
+                  e.preventDefault();
+                  onClickFavorite(image);
+                } },
+              'Like'
+            )
           );
         }),
         _react2.default.createElement(
@@ -27841,6 +27850,8 @@ var _reactRedux = __webpack_require__(116);
 
 var _imageCardList = __webpack_require__(127);
 
+var _favorites = __webpack_require__(321);
+
 var _ImageCardListLayout = __webpack_require__(115);
 
 var _ImageCardListLayout2 = _interopRequireDefault(_ImageCardListLayout);
@@ -27863,6 +27874,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchNextFlickrImages: function fetchNextFlickrImages() {
       dispatch((0, _imageCardList.fetchNextFlickrImages)());
+    },
+    onClickFavorite: function onClickFavorite(imageId) {
+      dispatch((0, _favorites.onClickFavorite)(imageId));
     }
   };
 };
@@ -29191,12 +29205,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _imageCardList = __webpack_require__(127);
 
+var _favorites = __webpack_require__(321);
+
 var DEFAULT_STATE = [];
 
 var images = function images() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
   var action = arguments[1];
 
+  debugger;
   switch (action.type) {
     case _imageCardList.ON_IMAGE_CARD_LIST_MOUNT:
       var newState = Object.assign({}, state, { images: action.images });
@@ -29205,6 +29222,13 @@ var images = function images() {
       return state.concat(action.images);
     case _imageCardList.FETCH_NEXT_FLICKR_IMAGES:
       return action.images.concat(state);
+    case _favorites.ON_CLICK_FAVORITE:
+      return state.map(function (image) {
+        if (action.newImageData.id === image.id) {
+          return action.newImageData;
+        }
+        return image;
+      });
     default:
       return state;
   }
@@ -31901,6 +31925,51 @@ var FavoritesListLayout = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = FavoritesListLayout;
+
+/***/ }),
+/* 321 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.onClickFavorite = exports.ON_CLICK_FAVORITE = undefined;
+
+var _axios = __webpack_require__(109);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ON_CLICK_FAVORITE = exports.ON_CLICK_FAVORITE = 'ON_CLICK_FAVORITE';
+
+var onClickFavorite = exports.onClickFavorite = function onClickFavorite(data) {
+  return function (dispatch) {
+    var newIsFavorite = toggleFavorite(data.is_favorite);
+    var newData = {
+      imageId: data.id,
+      isFavorite: newIsFavorite
+    };
+
+    _axios2.default.post('/v1/favorites', newData).then(function (res) {
+      console.log("Added image as a favorite");
+      //dispatch an action
+    }).catch(function (err) {
+      console.log(err);
+    });
+
+    var newImageData = Object.assign({}, data, { is_favorite: newIsFavorite });
+    debugger;
+    dispatch({ type: ON_CLICK_FAVORITE, newImageData: newImageData });
+  };
+};
+
+var toggleFavorite = function toggleFavorite(isFavorite) {
+  return isFavorite ? 0 : 1;
+};
 
 /***/ })
 /******/ ]);

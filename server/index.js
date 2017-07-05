@@ -62,8 +62,10 @@ app.get('/v1/images', function (req, res) {
   }
 });
 
-app.post('/api/albums', function(req, res) {
-  db.addAlbum(req.body, (err) => {
+app.post('/v1/favorites', function(req, res) {
+  console.log('in /v1/favorites')
+  console.log(req.body)
+  db.addFavorite(req.body, (err) => {
     if (err) {
       res.status(501).send(false);
     } else {

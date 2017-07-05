@@ -11,15 +11,16 @@ CREATE TABLE images (
   date_taken VARCHAR(30),
   date_published BIGINT unsigned,
   author VARCHAR(100),
-  PRIMARY KEY(id)
-);
-
-CREATE TABLE favorites (
-  id INT NOT NULL AUTO_INCREMENT,
-  image_id BIGINT,
   is_favorite TINYINT unsigned DEFAULT 0,
   PRIMARY KEY(id)
 );
+
+-- CREATE TABLE favorites (
+--   id INT NOT NULL AUTO_INCREMENT,
+--   image_id BIGINT,
+--   is_favorite TINYINT unsigned DEFAULT 0,
+--   PRIMARY KEY(id)
+-- );
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root < schema.sql

@@ -16,7 +16,7 @@ class ImageCardListLayout extends React.Component {
   }
 
   render() {
-    const { images, onClickLoadMoreImages } = this.props
+    const { images, onClickLoadMoreImages, onClickFavorite } = this.props
     return (
       <div>
         <Link to={`/favorites`}>Favorites</Link>
@@ -26,6 +26,10 @@ class ImageCardListLayout extends React.Component {
               <div>Taken on {image.date_taken}</div>
               <div>Published on {image.date_published} </div>
               <img src={image.flickr_url}></img>
+              <button onClick={(e) => {
+                e.preventDefault()
+                onClickFavorite(image)
+                }}>Like</button>
             </div>)
           }
         )}

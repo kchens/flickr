@@ -80,6 +80,29 @@ var addImages = function(imageObjs) {
     })
 }
 
+var addFavorite = function(reqObj, cb) {
+    var query = `UPDATE images SET is_favorite = ${reqObj.isFavorite} WHERE id = ${reqObj.imageId}`
+    console.log(query)
+    connection.query(query, (err,results,fields) => {
+      if (err) {
+        cb(err, null);
+      } else {
+        cb(null, results);
+      }
+    });
+    // selectQuery = `SELECT * FROM images WHERE id = ${reqObj.imageId}`
+    // console.log(selectQuery)
+    // connection.query(query, (err,results,fields) => {
+    //   console.log(results)
+    //   if (err) {
+    //     resolve(cb(err, null));
+    //   } else {
+    //     resolve(cb(null, results));
+    //   }
+    // });
+}
+
 module.exports.getNextImages = getNextImages;
 module.exports.getExistingFlickrIds = getExistingFlickrIds;
 module.exports.addImages = addImages;
+module.exports.addFavorite = addFavorite;
