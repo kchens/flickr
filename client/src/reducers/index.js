@@ -2,7 +2,7 @@ import images from './images';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-    images
+    images,
 });
 
 export default rootReducer;

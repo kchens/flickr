@@ -33,17 +33,17 @@ app.get('/v1/images', function (req, res) {
           return imageObj
         })
 
-        db.addImages(parsedData, (err) => {
+        db.addImages(parsedData)
+        // return parsedData
+      }).then(() => {
+        var lastImageId = null, limit = 10
+        db.getNextImages(lastImageId, limit, (err, data) => {
           if (err) {
-            // res.status(501).send(false);
-            console.log(err)
+            res.status(501).send(err);
           } else {
-            // res.status(200).send(true);
-            console.log("finished inserting all images")
+            res.status(200).send(data);
           }
-        });
-
-        return parsedData
+        })
       })
       .catch((err) => {
         console.log(err)

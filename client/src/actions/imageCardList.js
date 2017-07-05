@@ -1,6 +1,7 @@
 import axios from 'axios'
 export const ON_IMAGE_CARD_LIST_MOUNT = 'ON_IMAGE_CARD_LIST_MOUNT'
 export const ON_INFINITE_SCROLL = 'ON_INFINITE_SCROLL'
+export const FETCH_NEXT_FLICKR_IMAGES = 'FETCH_NEXT_FLICKR_IMAGES'
 
 export const loadImages = () => {
   return (dispatch) => {
@@ -30,6 +31,19 @@ export const loadNextImages = (lastImageId) => {
       }
       const images = res.data
       dispatch({ type: ON_INFINITE_SCROLL, images })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+}
+
+export const fetchNextFlickrImages = () => {
+  return (dispatch) => {
+    axios('/v1/images?src=flickr')
+    .then((res) => {
+      const images = res.data
+      dispatch({ type: FETCH_NEXT_FLICKR_IMAGES, images })
     })
     .catch((err) => {
       console.log(err)

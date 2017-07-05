@@ -4,10 +4,15 @@ import InfiniteScroll from 'react-infinite-scroller';
 class ImageCardListLayout extends React.Component {
   constructor(props) {
     super(props);
+
   }
 
   componentDidMount() {
-    this.props.onComponentDidMount()
+    const { onComponentDidMount, fetchNextFlickrImages} = this.props
+    onComponentDidMount()
+    setInterval( () => {
+      fetchNextFlickrImages()
+    }, 60000)
   }
 
   render() {

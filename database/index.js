@@ -4,7 +4,12 @@ var mysqlConfig = require('./config.js');
 var connection = mysql.createConnection(mysqlConfig);
 
 var getNextImages = function(lastImageId, limit, cb) {
-  var query = `SELECT * FROM images WHERE id > ${lastImageId} LIMIT ${limit}`
+  var query
+  if (lastImageId) {
+    query = `SELECT * FROM images WHERE id > ${lastImageId} LIMIT ${limit}`
+  } else {
+    query = `SELECT * FROM images ORDER BY id DESC LIMIT ${limit}`
+  }
   console.log(query)
   connection.query(query, (err,results,fields) => {
     console.log(results)
@@ -36,7 +41,7 @@ var getExistingFlickrIds = function(flickrIds) {
   })
 }
 
-var addImages = function(imageObjs, cb) {
+var addImages = function(imageObjs) {
   // FOR TESTING DUPLICATES
   // imageObjs.push({ flickr_id: 34869566464 }, {flickr_id: 34869566784 })
   console.log('imageObjs')
