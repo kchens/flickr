@@ -10482,50 +10482,12 @@ var App = function (_React$Component) {
   function App(props) {
     _classCallCheck(this, App);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-
-    _this.state = {
-      images: []
-    };
-    return _this;
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
   }
 
   _createClass(App, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      // axios('/v1/images?src=flickr')
-      //   .then((response) => {
-      //     // console.log(response)
-      //     // this.setState({
-      //     //   albums: response.data
-      //     // })
-      //     console.log('Added album successfully')
-      //   })
-      //   .catch((error) => {
-      //     console.log("Didn't add album");
-      // });
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      // axios('/v1/images?src=private&limit=10&lastImageId=10')
-      //   .then((res) => {
-      //     if (res.data.length < 10) {
-      //        axios('/v1/images?src=flickr')
-      //     }
-      //     this.setState({ images: res.data })
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var images = this.state.images;
-
-      console.log(images);
-      console.log('--------');
       return _react2.default.createElement(
         'div',
         { className: 'mw6' },
