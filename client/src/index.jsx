@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
-import ImageCardList from './components/ImageCardList.jsx';
+import ImageCardListLayout from './components/ImageCardListLayout.jsx';
+import ImageCardList from './containers/ImageCardList.jsx';
+import { Provider } from 'react-redux';
+import store from './store';
 import "./index.css";
 
 class App extends React.Component {
@@ -28,16 +31,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios('/v1/images?src=private&limit=10&lastImageId=10')
-      .then((res) => {
-        if (res.data.length < 10) {
-           axios('/v1/images?src=flickr')
-        }
-        this.setState({ images: res.data })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    // axios('/v1/images?src=private&limit=10&lastImageId=10')
+    //   .then((res) => {
+    //     if (res.data.length < 10) {
+    //        axios('/v1/images?src=flickr')
+    //     }
+    //     this.setState({ images: res.data })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
   }
 
   render() {
@@ -47,7 +50,9 @@ class App extends React.Component {
     return (
       <div className="mw6">
         <div className="orange">Flickr App</div>
-        <ImageCardList images={images}></ImageCardList>
+        <Provider store={store}>
+          <ImageCardList></ImageCardList>
+        </Provider>
       </div>
     )
   }
