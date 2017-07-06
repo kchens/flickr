@@ -8761,6 +8761,10 @@ var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _LikeHeart = __webpack_require__(443);
+
+var _LikeHeart2 = _interopRequireDefault(_LikeHeart);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8798,6 +8802,7 @@ var ImageCard = function (_React$Component) {
           image = _props.image,
           onClickFavorite = _props.onClickFavorite;
 
+
       return _react2.default.createElement(
         'div',
         { className: 'flex-column ma4 pa3 bg-light-gray' },
@@ -8817,18 +8822,7 @@ var ImageCard = function (_React$Component) {
           )
         ),
         _react2.default.createElement('img', { className: 'ma3', src: image.flickr_url }),
-        _react2.default.createElement(
-          'div',
-          { className: 'tl' },
-          _react2.default.createElement(
-            'button',
-            { onClick: function onClick(e) {
-                e.preventDefault();
-                onClickFavorite(image);
-              } },
-            'Like'
-          )
-        )
+        _react2.default.createElement(_LikeHeart2.default, { image: image, onClickFavorite: onClickFavorite })
       );
     }
   }]);
@@ -32302,9 +32296,13 @@ var FavoritesListLayout = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(_TopNavBar2.default, { pageName: 'Your Favorites', pageLink: '/', pageLinkName: 'Home' }),
-        favorites.map(function (image, index) {
-          return _react2.default.createElement(_ImageCard2.default, { key: index, image: image, onClickFavorite: onClickFavorite });
-        })
+        _react2.default.createElement(
+          'div',
+          { className: 'ma4 flex-column mw6 center' },
+          favorites.map(function (image, index) {
+            return _react2.default.createElement(_ImageCard2.default, { key: index, image: image, onClickFavorite: onClickFavorite });
+          })
+        )
       );
     }
   }]);
@@ -32313,6 +32311,70 @@ var FavoritesListLayout = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = FavoritesListLayout;
+
+/***/ }),
+/* 442 */,
+/* 443 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LikeHeart = function (_React$Component) {
+  _inherits(LikeHeart, _React$Component);
+
+  function LikeHeart(props) {
+    _classCallCheck(this, LikeHeart);
+
+    return _possibleConstructorReturn(this, (LikeHeart.__proto__ || Object.getPrototypeOf(LikeHeart)).call(this, props));
+  }
+
+  _createClass(LikeHeart, [{
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          image = _props.image,
+          onClickFavorite = _props.onClickFavorite;
+
+
+      var heartColor = image.is_favorite ? "tl red" : "tl blue";
+      return _react2.default.createElement(
+        "div",
+        { className: heartColor },
+        _react2.default.createElement(
+          "a",
+          { onClick: function onClick(e) {
+              e.preventDefault();
+              onClickFavorite(image);
+            } },
+          "\u2665"
+        )
+      );
+    }
+  }]);
+
+  return LikeHeart;
+}(_react2.default.Component);
+
+exports.default = LikeHeart;
 
 /***/ })
 /******/ ]);

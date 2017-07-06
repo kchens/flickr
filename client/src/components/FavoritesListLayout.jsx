@@ -17,10 +17,12 @@ class FavoritesListLayout extends React.Component {
     return (
       <div>
         <TopNavBar pageName="Your Favorites" pageLink="/" pageLinkName="Home"/>
-        { favorites.map((image, index) => {
-            return (<ImageCard key={index} image={image} onClickFavorite={onClickFavorite}></ImageCard>)
-          }
-        )}
+        <div className="ma4 flex-column mw6 center">
+          { favorites.map((image, index) => {
+              return (<ImageCard key={index} image={image} onClickFavorite={onClickFavorite}></ImageCard>)
+            }
+          )}
+        </div>
       </div>
     )
   }

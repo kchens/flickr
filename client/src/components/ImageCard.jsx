@@ -1,4 +1,5 @@
 import React from 'react'
+import LikeHeart from './LikeHeart.jsx'
 
 const parseUnixDate = (unix) => {
     var a = new Date(unix);
@@ -21,6 +22,7 @@ class ImageCard extends React.Component {
 
   render() {
     const { image, onClickFavorite } = this.props
+
     return (
       <div className="flex-column ma4 pa3 bg-light-gray">
         <div className="flex">
@@ -28,12 +30,7 @@ class ImageCard extends React.Component {
           <div className="tr ml6">{parseUnixDate(image.date_published)} </div>
         </div>
         <img className="ma3" src={image.flickr_url}></img>
-        <div className="tl">
-          <button onClick={(e) => {
-            e.preventDefault()
-            onClickFavorite(image)
-            }}>Like</button>
-        </div>
+        <LikeHeart image={image} onClickFavorite={onClickFavorite}/>
       </div>
     )
   }
