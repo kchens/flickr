@@ -13758,6 +13758,10 @@ var _ImageCard = __webpack_require__(131);
 
 var _ImageCard2 = _interopRequireDefault(_ImageCard);
 
+var _TopNavBar = __webpack_require__(324);
+
+var _TopNavBar2 = _interopRequireDefault(_TopNavBar);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13798,21 +13802,25 @@ var ImageCardListLayout = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(_TopNavBar2.default, { pageName: 'Flickr App', pageLink: '/favorites', pageLinkName: 'Favorites' }),
         _react2.default.createElement(
-          _reactRouter.Link,
-          { to: '/favorites' },
-          'Favorites'
+          'div',
+          { className: 'ma4' },
+          images.map(function (image, index) {
+            return _react2.default.createElement(_ImageCard2.default, { key: index, image: image, onClickFavorite: onClickFavorite });
+          })
         ),
-        images.map(function (image, index) {
-          return _react2.default.createElement(_ImageCard2.default, { key: index, image: image, onClickFavorite: onClickFavorite });
-        }),
         _react2.default.createElement(
-          'a',
-          { onClick: function onClick(e) {
-              e.preventDefault();
-              onClickLoadMoreImages();
-            } },
-          'Load Next 10'
+          'div',
+          { className: 'pa4 bg-light-gray' },
+          _react2.default.createElement(
+            'a',
+            { className: 'ma3 b bg-yellow pa3 br1 blue', onClick: function onClick(e) {
+                e.preventDefault();
+                onClickLoadMoreImages();
+              } },
+            'Load Next 10'
+          )
         )
       );
     }
@@ -16101,8 +16109,16 @@ var App = function (_React$Component) {
           _react2.default.createElement(
             _reactRouter.Router,
             { history: history },
-            _react2.default.createElement(_reactRouter.Route, { path: '/', component: _ImageCardList2.default }),
-            _react2.default.createElement(_reactRouter.Route, { path: '/favorites', component: _FavoritesList2.default })
+            _react2.default.createElement(
+              _reactRouter.Route,
+              null,
+              _react2.default.createElement(
+                'div',
+                { className: 'tc' },
+                _react2.default.createElement(_reactRouter.Route, { path: '/', component: _ImageCardList2.default }),
+                _react2.default.createElement(_reactRouter.Route, { path: '/favorites', component: _FavoritesList2.default })
+              )
+            )
           )
         )
         // </div>
@@ -32049,6 +32065,10 @@ var _ImageCard = __webpack_require__(131);
 
 var _ImageCard2 = _interopRequireDefault(_ImageCard);
 
+var _TopNavBar = __webpack_require__(324);
+
+var _TopNavBar2 = _interopRequireDefault(_TopNavBar);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32081,7 +32101,7 @@ var FavoritesListLayout = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'FavoritesList',
+        _react2.default.createElement(_TopNavBar2.default, { pageName: 'Your Favorites', pageLink: '/', pageLinkName: 'Home' }),
         favorites.map(function (image, index) {
           return _react2.default.createElement(_ImageCard2.default, { key: index, image: image, onClickFavorite: onClickFavorite });
         })
@@ -32093,6 +32113,76 @@ var FavoritesListLayout = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = FavoritesListLayout;
+
+/***/ }),
+/* 324 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = __webpack_require__(67);
+
+var _ImageCard = __webpack_require__(131);
+
+var _ImageCard2 = _interopRequireDefault(_ImageCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TopNavBar = function (_React$Component) {
+  _inherits(TopNavBar, _React$Component);
+
+  function TopNavBar(props) {
+    _classCallCheck(this, TopNavBar);
+
+    return _possibleConstructorReturn(this, (TopNavBar.__proto__ || Object.getPrototypeOf(TopNavBar)).call(this, props));
+  }
+
+  _createClass(TopNavBar, [{
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          pageName = _props.pageName,
+          pageLinkName = _props.pageLinkName,
+          pageLink = _props.pageLink;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'db bb b--silver ma1 pa3 tc bg-light-gray' },
+        _react2.default.createElement(
+          'h1',
+          { className: 'pa1 bg-light-gray' },
+          pageName
+        ),
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { className: 'no-underline bg-yellow br1 pa2 blue', to: pageLink },
+          pageLinkName
+        )
+      );
+    }
+  }]);
+
+  return TopNavBar;
+}(_react2.default.Component);
+
+exports.default = TopNavBar;
 
 /***/ })
 /******/ ]);

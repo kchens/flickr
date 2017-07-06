@@ -26,10 +26,12 @@ class App extends React.Component {
       //   <div className="orange">Flickr App</div>
         <Provider store={store}>
           <Router history={history}>
-            {/*<Route>*/}
+            <Route>
+              <div className="tc">
               <Route path='/' component={ImageCardList} />
               <Route path='/favorites' component={FavoritesList} />
-            {/*</Route>*/}
+              </div>
+            </Route>
           </Router>
         </Provider>
       // </div>
@@ -37,4 +39,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App/>, document.getElementById('app'));
