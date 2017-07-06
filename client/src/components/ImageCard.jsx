@@ -1,5 +1,18 @@
 import React from 'react'
 
+const parseUnixDate = (unix) => {
+    var a = new Date(unix);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
+}
+
 class ImageCard extends React.Component {
   constructor(props) {
     super(props);
@@ -9,15 +22,18 @@ class ImageCard extends React.Component {
   render() {
     const { image, onClickFavorite } = this.props
     return (
-      <div>
-        <div>By {image.author}</div>
-        <div>Taken on {image.date_taken}</div>
-        <div>Published on {image.date_published} </div>
-        <img src={image.flickr_url}></img>
-        <button onClick={(e) => {
-          e.preventDefault()
-          onClickFavorite(image)
-          }}>Like</button>
+      <div className="flex-column ma4 pa3 bg-light-gray">
+        <div className="flex">
+          <div className="tl b mr4 mw6">{image.author}</div>
+          <div className="tr ml6">{parseUnixDate(image.date_published)} </div>
+        </div>
+        <img className="ma3" src={image.flickr_url}></img>
+        <div className="tl">
+          <button onClick={(e) => {
+            e.preventDefault()
+            onClickFavorite(image)
+            }}>Like</button>
+        </div>
       </div>
     )
   }

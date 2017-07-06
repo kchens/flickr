@@ -22,7 +22,7 @@ class ImageCardListLayout extends React.Component {
     return (
       <div>
         <TopNavBar pageName="Flickr App" pageLink="/favorites" pageLinkName="Favorites"/>
-        <div className="ma4">
+        <div className="ma4 flex-column mw6 center">
           { images.map((image, index) => {
               return (<ImageCard key={index} image={image} onClickFavorite={onClickFavorite}></ImageCard>)
             }
